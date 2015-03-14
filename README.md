@@ -4,7 +4,11 @@ Simple prototype of a dashboard using Go, Socket.IO, and ReactJS.
 
 ## Usage
 
-Simply run the following;
+### Install Required Library
+
+    $ go get github.com/googollee/go-socket.io
+
+### Run Application
 
     $ make run
 
@@ -13,11 +17,20 @@ Then point your browser at `http://localhost:8000`
 
 ## Contribute
 
-When developing run the following in a terminal;
+### Setup Dev Environment
+
+You need to install the relevant modules;
+
+    $ bower install
+    $ npm install
+
+### Developing
+
+Then when developing run `gulp` in a terminal;
 
     $ gulp
 
-And the relevant `dist` files will be created as you develop.
+And the relevant `dist` files will be created as you make changes to the js/css files.
 
 ## License
 
