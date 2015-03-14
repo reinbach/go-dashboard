@@ -48,7 +48,7 @@ var Footer = React.createClass({
     render: function() {
         return (
             <footer>
-                <p>&copy; IRON Labs, Inc. 2015</p>
+                <p>&copy; Reinbach 2015</p>
             </footer>
         );
     }
@@ -82,7 +82,7 @@ var Home = React.createClass({
 var Chat = React.createClass({
     getInitialState: function() {
         return {
-            messages: [],
+            messages: ["Hello", "What"],
             userInput: ""
         };
     },
@@ -117,7 +117,7 @@ var Chat = React.createClass({
         return (
             <div>
                 <hr />
-                <ul>{msgs}</ul>
+                <ul className="messages">{msgs}</ul>
                 <Input type="text" autoComplete="off"
                        placeholder="Message" value={this.state.userInput}
                        onChange={this.changeHandler} />
