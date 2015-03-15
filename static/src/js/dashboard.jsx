@@ -82,7 +82,7 @@ var Home = React.createClass({
 var Chat = React.createClass({
     getInitialState: function() {
         return {
-            messages: ["Hello", "What"],
+            messages: [],
             userInput: ""
         };
     },
