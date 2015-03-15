@@ -112,7 +112,7 @@ var Chat = React.createClass({
         var Input = ReactBootstrap.Input
         var msgs = []
         this.state.messages.forEach(function(msg){
-            msgs.push(<CharRow message={msg} />);
+            msgs.push(<ChatRow message={msg} />);
         });
         return (
             <div>
@@ -130,7 +130,7 @@ var Chat = React.createClass({
     }
 });
 
-var CharRow = React.createClass({
+var ChatRow = React.createClass({
     render: function() {
         return (
             <li>{this.props.message}</li>
@@ -143,6 +143,13 @@ var SideMenu = React.createClass({
         return (
             <div className="col-md-3">
                 <h3>Charts</h3>
+                <ul>
+                    <li>
+                        <Link to="bar-simple">
+                            Bar Chart (simple)
+                        </Link>
+                    </li>
+                </ul>
                 <Chat />
             </div>
         );
@@ -157,8 +164,7 @@ var ChartHolder = React.createClass({
                     <div className="row">
                         <SideMenu />
                         <div className="col-md-9">
-                            <h1>Chart</h1>
-                            <BarChart width={600} height={300} />
+                            <RouteHandler />
                         </div>
                     </div>
                     <hr />
@@ -171,7 +177,10 @@ var ChartHolder = React.createClass({
 
 var routes = (
     <Route name="app" path="/" handler={App}>
-        <Route name="chart" handler={ChartHolder}/>
+        <Route name="chart" handler={ChartHolder}>
+            <Route name="bar-simple" handler={BarChartSimple}/>
+            <DefaultRoute handler={BarChartSimple}/>
+        </Route>
         <Route name="home" handler={Home}/>
         <DefaultRoute handler={Home}/>
     </Route>

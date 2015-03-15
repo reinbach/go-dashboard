@@ -25,6 +25,7 @@ var Bar = React.createClass({
     }
 });
 
+// Bar Chart Simple
 var BarDataSeries = React.createClass({
     getDefaultProps: function() {
         return {
@@ -62,6 +63,17 @@ var BarChart = React.createClass({
                                title="Test Chart" width={this.props.width}
                                height={this.props.height} color="cornflowerblue" />
             </Chart>
+        );
+    }
+});
+
+var BarChartSimple = React.createClass({
+    render: function() {
+        return (
+            <div>
+                <h1>Bar Chart (simple)</h1>
+                <BarChart width={600} height={300} />
+            </div>
         );
     }
 });
