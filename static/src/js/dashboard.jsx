@@ -141,19 +141,9 @@ var CharRow = React.createClass({
 var SideMenu = React.createClass({
     render: function() {
         return (
-            <div className="col-md-4">
+            <div className="col-md-3">
                 <h3>Charts</h3>
                 <Chat />
-            </div>
-        );
-    }
-});
-
-var Chart = React.createClass({
-    render: function() {
-        return (
-            <div className="col-md-8">
-                <h1>Chart</h1>
             </div>
         );
     }
@@ -166,7 +156,10 @@ var ChartHolder = React.createClass({
                 <div className="container">
                     <div className="row">
                         <SideMenu />
-                        <Chart />
+                        <div className="col-md-9">
+                            <h1>Chart</h1>
+                            <BarChart width={600} height={300} />
+                        </div>
                     </div>
                     <hr />
                     <Footer />
