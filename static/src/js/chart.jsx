@@ -106,21 +106,23 @@ var LineDataSeries = React.createClass({
             height: 0
         };
     },
-    render: function() {
+    componentWillMount: function() {
         var parseDate = d3.time.format("%d-%b-%y").parse;
         this.props.data.forEach(function(d) {
-            d.x = parseDate(d.x);
+            d.x_scrubbed = parseDate(d.x);
             d.y = +d.y;
         });
+    },
+    render: function() {
         var yScale = d3.scale.linear()
                        .domain(d3.extent(this.props.data, function(d) { return d.y; }))
                        .range([this.props.height, 0]);
         var xScale = d3.time.scale()
-                       .domain(d3.extent(this.props.data, function(d) { return d.x; }))
+                       .domain(d3.extent(this.props.data, function(d) { return d.x_scrubbed; }))
                        .range([0, this.props.width]);
         var line = d3.svg.line()
                      .x(function(d) {
-                         return xScale(d.x);
+                         return xScale(d.x_scrubbed);
                      })
                      .y(function(d) {
                          return yScale(d.y);
