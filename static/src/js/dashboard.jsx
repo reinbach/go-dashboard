@@ -149,6 +149,11 @@ var SideMenu = React.createClass({
                             Bar Chart (simple)
                         </Link>
                     </li>
+                    <li>
+                        <Link to="line-simple">
+                            Line Chart (simple)
+                        </Link>
+                    </li>
                 </ul>
                 <Chat />
             </div>
@@ -179,6 +184,7 @@ var routes = (
     <Route name="app" path="/" handler={App}>
         <Route name="chart" handler={ChartHolder}>
             <Route name="bar-simple" handler={BarChartSimple}/>
+            <Route name="line-simple" handler={LineChartSimple}/>
             <DefaultRoute handler={BarChartSimple}/>
         </Route>
         <Route name="home" handler={Home}/>
