@@ -143,7 +143,7 @@ var SideMenu = React.createClass({
         return (
             <div className="col-md-3">
                 <h3>Charts</h3>
-                <ul>
+                <ul className="nav nav-pills nav-stacked">
                     <li>
                         <Link to="bar-simple">
                             Bar Chart (simple)
