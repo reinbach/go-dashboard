@@ -124,6 +124,7 @@ var LineDataSeries = React.createClass({
         socket.on("chart stream", this.updateHandler);
     },
     componentWillUnmount: function() {
+        socket.emit("chart stream", "stop")
         socket.removeListener("chart stream", this.updateHandler);
     },
     render: function() {
@@ -169,9 +170,20 @@ var LineChart = React.createClass({
 });
 
 var LineChartSimple = React.createClass({
+    getInitialState: function() {
+        return {
+            stream: false,
+            text: "Start"
+        };
+    },
     updateHandler: function() {
-        socket.emit("chart stream",
-                    JSON.stringify({Index: 0, Max: 1000, Min: 0}));
+        if (this.state.stream) {
+            socket.emit("chart stream", "stop");
+            this.setState({stream: false, text: "Start"});
+        } else {
+            socket.emit("chart stream", "start");
+            this.setState({stream: true, text: "Stop"});
+        }
     },
     render: function() {
         var Button = ReactBootstrap.Button;
@@ -179,7 +191,9 @@ var LineChartSimple = React.createClass({
             <div>
                 <h1>Line Chart (simple)</h1>
                 <LineChart width={600} height={300} />
-                <Button onClick={this.updateHandler}>Start Streaming</Button>
+                <Button onClick={this.updateHandler}>
+                    {this.state.text} Streaming
+                </Button>
             </div>
         );
     }

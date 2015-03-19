@@ -10,6 +10,11 @@ import (
 	"github.com/googollee/go-socket.io"
 )
 
+var (
+	timer      = time.NewTicker(time.Second / 10)
+	line_index = 0
+)
+
 type LineChart struct {
 	Index int
 	Value float64
@@ -21,16 +26,14 @@ func ChatHandler(so socketio.Socket, msg string) {
 	so.BroadcastTo("chat", "chat message", msg)
 }
 
-func StreamData(so socketio.Socket, l LineChart) {
+func StreamData(so socketio.Socket) {
 	r := rand.New(rand.NewSource(1000000))
-	t := time.NewTicker(time.Second / 10)
 	go func() {
-		i := l.Index
-		for _ = range t.C {
-			i += 1
-			v := r.Float64() * l.Max
+		for _ = range timer.C {
+			line_index += 1
+			v := r.Float64() * 1000
 			d := LineChart{
-				Index: i,
+				Index: line_index,
 				Value: v,
 			}
 			j, err := json.Marshal(d)
@@ -43,12 +46,12 @@ func StreamData(so socketio.Socket, l LineChart) {
 }
 
 func ChartHandler(so socketio.Socket, msg string) {
-	d := LineChart{}
-	err := json.Unmarshal([]byte(msg), &d)
-	if err != nil {
-		log.Println("Unknown message: ", err)
+	if msg == "start" {
+		timer = time.NewTicker(time.Second / 10)
+	} else {
+		timer.Stop()
 	}
-	StreamData(so, d)
+	StreamData(so)
 }
 
 func SocketHandler(so socketio.Socket) {
