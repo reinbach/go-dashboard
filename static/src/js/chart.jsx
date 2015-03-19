@@ -104,7 +104,7 @@ var LineDataSeries = React.createClass({
             interpolate: "linear",
             width: 0,
             height: 0,
-            maxDataPoints: 300
+            maxDataPoints: 100
         };
     },
     getInitialState: function() {
@@ -114,7 +114,7 @@ var LineDataSeries = React.createClass({
     },
     updateHandler: function(msg) {
         data = JSON.parse(msg);
-        this.state.data.push({x: data.Number, y: data.Amount});
+        this.state.data.push({x: data.Index, y: data.Value});
         if (this.state.data.length > this.props.maxDataPoints) {
             this.state.data.shift();
         }
@@ -171,7 +171,7 @@ var LineChart = React.createClass({
 var LineChartSimple = React.createClass({
     updateHandler: function() {
         socket.emit("chart stream",
-                    JSON.stringify({Number: 0, Length: 100, Max: 1000, Min: 0}));
+                    JSON.stringify({Index: 0, Max: 1000, Min: 0}));
     },
     render: function() {
         var Button = ReactBootstrap.Button;

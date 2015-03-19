@@ -5,16 +5,16 @@ import (
 	"log"
 	"math/rand"
 	"net/http"
+	"time"
 
 	"github.com/googollee/go-socket.io"
 )
 
 type LineChart struct {
-	Number int
-	Amount float64
-	Length int
-	Max    float64
-	Min    float64
+	Index int
+	Value float64
+	Max   float64
+	Min   float64
 }
 
 func ChatHandler(so socketio.Socket, msg string) {
@@ -22,21 +22,24 @@ func ChatHandler(so socketio.Socket, msg string) {
 }
 
 func StreamData(so socketio.Socket, l LineChart) {
-	r := rand.New(rand.NewSource(99))
-	var end int
-	end = l.Number + l.Length
-	for i := l.Number; i < end; i++ {
-		n := r.Float64() * l.Max
-		d := LineChart{
-			Number: i,
-			Amount: n,
+	r := rand.New(rand.NewSource(1000000))
+	t := time.NewTicker(time.Second / 10)
+	go func() {
+		i := l.Index
+		for _ = range t.C {
+			i += 1
+			v := r.Float64() * l.Max
+			d := LineChart{
+				Index: i,
+				Value: v,
+			}
+			j, err := json.Marshal(d)
+			if err != nil {
+				log.Println("Failed to Marshal message: ", err)
+			}
+			so.Emit("chart stream", string(j))
 		}
-		j, err := json.Marshal(d)
-		if err != nil {
-			log.Println("Failed to Marshal message: ", err)
-		}
-		so.Emit("chart stream", string(j))
-	}
+	}()
 }
 
 func ChartHandler(so socketio.Socket, msg string) {
