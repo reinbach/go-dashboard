@@ -20,6 +20,7 @@ var Chat = React.createClass({
             return;
         }
         socket.emit("chat message", this.state.userInput);
+        this.state.messages.push(this.state.userInput);
         this.setState({messages: this.state.messages, userInput: ""});
     },
     componentDidMount: function() {
